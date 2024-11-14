@@ -75,6 +75,11 @@ function handleDragStart(e) {
 
     // Apply initial scale for animation
     draggedEmojiClone.style.transform = 'scale(1.2)';
+
+    // Haptic feedback
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
 }
 
 function handleDragMove(e) {
@@ -128,6 +133,16 @@ function handleDragEnd(e) {
     if (currentDroppable) {
         currentDroppable.textContent = draggedEmoji.textContent;
         currentDroppable.classList.remove('highlight');
+
+        // Check if all placeholders are filled in the morning sector
+        if (currentDroppable.closest('#morning-sector')) {
+            const placeholders = currentDroppable.closest('#morning-sector').querySelectorAll('.emoji-placeholder');
+            const allFilled = Array.from(placeholders).every(placeholder => placeholder.textContent.trim() !== '');
+            if (allFilled) {
+                const checkButton = currentDroppable.closest('#morning-sector').querySelector('.check-button');
+                checkButton.classList.add('checked');
+            }
+        }
     }
 
     draggedEmoji = null;
@@ -188,6 +203,16 @@ function handleMouseUp(e) {
     if (currentDroppable) {
         currentDroppable.textContent = draggedEmoji.textContent;
         currentDroppable.classList.remove('highlight');
+
+        // Check if all placeholders are filled in the morning sector
+        if (currentDroppable.closest('#morning-sector')) {
+            const placeholders = currentDroppable.closest('#morning-sector').querySelectorAll('.emoji-placeholder');
+            const allFilled = Array.from(placeholders).every(placeholder => placeholder.textContent.trim() !== '');
+            if (allFilled) {
+                const checkButton = currentDroppable.closest('#morning-sector').querySelector('.check-button');
+                checkButton.classList.add('checked');
+            }
+        }
     }
 
     draggedEmoji = null;
@@ -240,7 +265,9 @@ function updateLiveTime() {
 const checkButtons = document.querySelectorAll('.check-button');
 checkButtons.forEach(button => {
     button.addEventListener('click', () => {
-        button.classList.toggle('checked');
+        if (button.dataset.sector !== 'morning') {
+            button.classList.toggle('checked');
+        }
     });
 });
 

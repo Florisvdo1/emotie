@@ -6,15 +6,55 @@
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Press Start 2P', sans-serif;
     overflow-x: hidden;
     background-color: #80c6ff;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Cloud Background */
+.clouds {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.clouds__layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: contain;
+}
+
+.clouds__layer--1 {
+    background-image: url('clouds_layer1.png'); /* Create a pixel art cloud image */
+    animation: moveClouds 60s linear infinite;
+    opacity: 0.5;
+}
+
+.clouds__layer--2 {
+    background-image: url('clouds_layer2.png'); /* Create a second layer for depth */
+    animation: moveClouds 120s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes moveClouds {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
 }
 
 /* Header styles */
 header {
     background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px 15px;
+    padding: 5px 10px;
     position: fixed;
     width: 100%;
     top: 0;
@@ -48,18 +88,31 @@ header {
 .header-right {
     flex: 1;
     justify-content: flex-end;
+    position: relative;
 }
 
 #live-time {
     font-size: 1em;
-    color: #333;
+    color: #2b2b61;
+    font-weight: bold;
+    text-shadow: 0 0 3px gray;
 }
 
 header h1 {
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #333;
     font-weight: bold;
     text-align: center;
+}
+
+.delete-label {
+    font-size: 0.8em;
+    color: #333;
+    position: absolute;
+    top: -20px;
+    right: 0;
+    text-align: center;
+    width: 100px;
 }
 
 .icon-button {
@@ -75,6 +128,7 @@ header h1 {
     padding: 10px 15px;
     width: 100%;
     z-index: 900;
+    margin-top: 80px;
 }
 
 .deck-body {
@@ -122,14 +176,14 @@ header h1 {
 }
 
 #category-name {
-    font-size: 1.2em;
+    font-size: 1em;
     color: #333;
     font-weight: bold;
 }
 
 /* Main content styling */
 main {
-    padding-top: 120px;
+    padding-top: 400px;
     padding-bottom: 20px;
 }
 
@@ -157,7 +211,7 @@ main {
 }
 
 .sector-header h2 {
-    font-size: 1.3em;
+    font-size: 1.1em;
     color: #333;
     font-weight: bold;
 }
@@ -167,7 +221,7 @@ main {
     border: none;
     font-size: 1.5em;
     cursor: pointer;
-    color: #4CAF50;
+    color: gray;
     position: absolute;
     right: 0;
 }
@@ -234,8 +288,17 @@ footer {
 /* Day Rating System */
 .day-rating {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    margin-bottom: 20px;
+}
+
+.day-rating span {
+    font-size: 1em;
+    color: #2b2b61;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 0 3px gray;
 }
 
 .rating-buttons {
@@ -255,24 +318,36 @@ footer {
     transition: transform 0.1s;
 }
 
+.rating-button::before {
+    content: '👍';
+    position: absolute;
+    font-size: 1.5em;
+    color: rgba(255, 255, 255, 0.5); /* 50% transparent */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rating-button::after {
+    content: '👆';
+    position: absolute;
+    font-size: 1.5em;
+    color: rgba(255, 0, 0, 0.5); /* 50% transparent red */
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%, -50%);
+}
+
 .rating-button.selected {
     background-color: #6c6cff; /* Mid-blue */
 }
 
-.rating-button::after {
-    content: '';
-    position: absolute;
-    font-size: 1.5em;
+.rating-button.selected::before {
     color: #fff;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: none;
 }
 
 .rating-button.selected::after {
-    content: '👍';
-    display: block;
+    display: none;
 }
 
 .rating-button:active {
@@ -282,7 +357,7 @@ footer {
 /* Responsive Styles */
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.2em;
+        font-size: 1em;
     }
     .emoji-placeholder {
         width: 40px;

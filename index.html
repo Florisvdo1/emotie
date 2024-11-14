@@ -5,11 +5,17 @@
     <title>Emoji Day Planner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Include Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- Include the CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Cloud Background -->
+    <div class="clouds">
+        <div class="clouds__layer clouds__layer--1"></div>
+        <div class="clouds__layer clouds__layer--2"></div>
+    </div>
 
     <!-- Header -->
     <header>
@@ -21,7 +27,8 @@
                 <h1>Emoji Day Planner</h1>
             </div>
             <div class="header-right">
-                <!-- Clear Button (Folder Icon) -->
+                <!-- Folder Delete Icon -->
+                <div class="delete-label">Delete / Erase</div>
                 <button id="reset-button" class="icon-button">📁</button>
             </div>
         </div>
@@ -108,6 +115,7 @@
         </div>
         <!-- Day Rating -->
         <div class="day-rating">
+            <span>Rate your day</span>
             <div class="rating-buttons">
                 <button class="rating-button" data-rating="1"></button>
                 <button class="rating-button" data-rating="2"></button>
